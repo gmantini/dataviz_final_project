@@ -1,0 +1,145 @@
+---
+title: "Data Visualization Mini Project 1"
+author: "Gabriel Mantini. `gmantini5011@floridapoly.edu`"
+subtitle: "Analysis of US Births from 2000 to 2014"
+output: html_notebook
+---
+
+Load Libraries
+```{r, message=F, warning=F}
+library(tidyverse)
+library(scales)
+```
+
+Read in data
+```{r}
+us_births <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/us_births_00_14.csv", col_types = cols())
+```
+
+Check for null values
+```{r}
+sum(is.na.data.frame(us_births))
+```
+
+Summary statistics 
+```{r}
+summary(us_births)
+```
+
+Glimpse of columns
+```{r}
+glimpse(us_births)
+```
+
+Messing around with data
+```{r}
+us_births %>% 
+  filter(year==2000) %>% 
+  summarize(mean(births))
+```
+
+
+
+Very simple first look at births over the years - Honestly, doesn't seem to be a crazy trend here. It does slightly look like there's been a dip since 2007, which could be in part of the 2007-08 financial crisis if were to make a big leap, but can't really know for sure. It has seemed to mellow out in recent years though. Considering population growth however, the stagnation in births could very well be a decrease per population.
+```{r}
+ggplot(data=us_births, aes(x=year,y=births)) +
+  geom_bar(stat="identity")+
+  scale_y_continuous()
+```
+
+
+Taking a look at a breakdown for births by days of the week show that much fewer births happen on the weekends, an anomaly we'll have to search in to at the end of our research.
+```{r}
+total_births_weekday <- us_births %>% 
+  group_by(day_of_week) %>% 
+  summarize(total = sum(births))
+
+ggplot(data = total_births_weekday,
+       mapping = aes(x = day_of_week, y = total, fill = day_of_week)) +
+  geom_col() +
+  guides(fill = "none")
+```
+
+
+Taking another look at how births compare across days of the weeks in given months - can get the gist that the summer months seem good, but will need to create a better visualization to really demonstrate it.Some anomalies include Mondays in May, which is interesting.
+```{r}
+ggplot(us_births, aes(x=day_of_week,y=month,fill=births)) +
+  geom_tile()+
+  scale_fill_gradient(low = "white", high = "red")
+```
+
+
+At this point I kind of realized that it would make a lot of sense to label the months and days to make for better visualizations.
+
+Data Wrangling/Appending to Dataset
+```{r}
+month_names <- c("January", "February", "March", "April", "May", "June", "July",
+                 "August", "September", "October", "November", "December")
+
+day_names <- c("Monday", "Tuesday", "Wednesday", 
+               "Thursday", "Friday", "Saturday", "Sunday")
+
+us_births_labeled <- us_births %>% 
+  # Making month an ordered factor, using the month_name list as labels
+  mutate(month = factor(month, labels = month_names, ordered = TRUE)) %>% 
+  mutate(day_of_week = factor(day_of_week, labels = day_names, ordered = TRUE),
+         date_of_month_categorical = factor(date_of_month))
+
+head(us_births_labeled)
+```
+
+
+Creating a heatmap for average births by day of the month for given months
+```{r}
+avg_births_month_day <- us_births_labeled %>% 
+  group_by(month, date_of_month_categorical) %>% 
+  summarize(avg_births = mean(births))
+
+ggplot(data = avg_births_month_day,
+       # using fct(rev) to reverse having december at top
+       mapping = aes(x = date_of_month_categorical, y = fct_rev(month), fill = avg_births)) +
+  geom_tile() +
+  #add different color palette
+  scale_fill_gradientn(colors = hcl.colors(20, "RdYlGn")) +
+  # Add labels
+  labs(x = "Day of the month", y = "Month",
+       title = "Average births per day from 2000 to 2014",
+       fill = "Average births") +
+  theme_dark()
+```
+ 
+A few interesting things of note here:
+
+-Some months don't have 31 days (or even 30!)
+-Some notable holidays have a much notably smaller; January 1st, July 4th, and Christmas Eve and Christmas day on the 24th/25th of december. Also, the range of days that Thanksgiving can be on is from November 22nd to 28th in any given year. This range of days has notably lower births.
+-Summer months have notably higher number of births. While beyond the scope of this project, searches show that this is due to seasons and weather conditions resulting in more babies being conceived in cold winter months, which would project births being in the summer.
+
+
+
+Distribution of number of births
+```{r}
+ggplot(us_births_labeled, aes(x=births,y=..density..)) +
+  geom_histogram(color="blue",fill="white") +
+  geom_vline(aes(xintercept=mean(births)),
+             color="red", linetype="dashed", size=1) +
+  geom_density(alpha=.2, fill="green")
+```
+
+Based off of the information we've gathered, this Multimodal Distribution can be disected. It is very likely that the larger mode is on the average weekday, while the smaller mode are births on the weekends, as this gap is pretty similar to the plot prior showing births by day of the week. Furthermore, the variation between these is likely the variance in month/day of the month, in which the more populous months 
+
+
+#Conclusions:
+
+Realized a bit too late that I should add labeles to months and days, so for future work I would take more advantage of that and create visualizations with those. Original charts I planned to include were the heatmap and distribution histogram, in addition to a correlation matrix that I didn't get around to preprocessing well enough for. I tried to include principles of data visualization including decent use of color and storytelling.
+
+To reiterate notes from previous visualizations:
+
+
+- Found that there are much fewer births on the weekend as a result of scheduled births with c-sections and induced labors. Hospitals are less staffed and also won't charge as much on the weekend as opposed to normal operating hours, so this makes sense.
+
+- For similar reasons I imagine, there were significantly fewer births on holidays. Less people would want to schedule on a holiday, and the hospital would again have less availability.
+
+- Summer months have notably higher number of births. While beyond the scope of this project, searches show that this is due to seasons and weather conditions resulting in more babies being conceived in cold winter months, which would project births being in the summer.
+
+- It does slightly look like there's been a dip in births since 2007, which could be in part of the 2007-08 financial crisis if were to make a big leap, but can't really know for sure. It has seemed to mellow out in recent years though. Considering population growth however, the stagnation in births could very well be a decrease per population.
+
