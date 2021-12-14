@@ -5,12 +5,17 @@
 Learn more about me in my [GitHub profile page](https://github.com/gmantini)
 
 
-The following is a sample of products created during the _"Data Visualization and Reproducible Research"_ course.
+The following is a sample of products created during the _"Data Visualization and Reproducible Research"_ course. .
+
+
 
 
 ## Project 01
 
-In the `project_01/` folder you can find... _[short description of your revised project goes here]_
+In the `project_01/` folder you can find an analysis on the distribution of births in the United States
+from the years 2000-2014. Results showed that there are much fewer births on weekends compared to weekdays, likely as a result of planned/scheduled births and hospital staffing costs. For likely similar reasons, there were also significantly fewer births on holidays such as January 1st, July 4th, December 24th/25th, as well as the range of dates spanning the week of Thanksgiving from ~November 22nd to the 28th in any given year. 
+
+Summer months have notably higher numbers of births, likely due to natural seasonal conditions with more babies being conceived in cold winter months. There is also a notably slight dropoff in births starting from the 2007-08 year, perhaps due to the finanical criss and a change in culture. While having leveled out in recent years, this can still be seen as a slight stagnation in births with the relative increase in population.
 
 **Sample data visualization:** 
 
