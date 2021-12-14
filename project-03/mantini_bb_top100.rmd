@@ -1,0 +1,151 @@
+---
+title: "Mini Project 3"
+subtitle: "Visualizing Text and Distributions"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
+---
+
+# Data Visualization Project 03
+
+
+In this exercise you will explore methods to visualize text data and/or practice how to recreate charts that show the distributions of a continuous variable. 
+
+
+## Visualizing Text Data
+
+Review the set of slides (and additional resources linked in it) for visualizing text data: https://www.reisanar.com/slides/text-viz#1
+
+Choose any dataset with text data, and create at least one visualization with it. For example, you can create a frequency count of most used bigrams, a sentiment analysis of the text data, a network visualization of terms commonly used together, and/or a visualization of a topic modeling approach to the problem of identifying words/documents associated to different topics in the text data you decide to use. 
+
+Make sure to include a copy of the dataset in the `data/` folder, and reference your sources if different from the ones listed below:
+
+- [Billboard Top 100 Lyrics](https://github.com/reisanar/datasets/blob/master/BB_top100_2015.csv)
+
+- [RateMyProfessors comments](https://github.com/reisanar/datasets/blob/master/rmp_wit_comments.csv)
+
+- [FL Poly News 2020](https://github.com/reisanar/datasets/blob/master/poly_news_FL20.csv)
+
+- [FL Poly News 2019](https://github.com/reisanar/datasets/blob/master/poly_news_FL19.csv)
+
+(to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
+
+```{r, message = FALSE, warning=FALSE}
+library(tidyverse)
+library(tidytext)
+library(gutenbergr)
+```
+
+
+# Problem 2 : Sentimental Analysis with *bing* lexicon
+* dataset : lyrics
+
+```{r}
+lyrics <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/BB_top100_2015.csv");lyrics
+```
+
+```{r}
+lyrics <- select(lyrics, -Year, -Source); head(lyrics)
+```
+
+### (To-Do, 10 points) Q2-1 : pre-processing
+* Step 1: select top 5 songs using *filter*
+* Step 2: tokenization using *unnest_tokens*
+* Step 3: remove stopword and format change for UTF-8 using *str_detect* with *filter*
+* Step 4: shows the results in step 3 using *head* (10 points)
+
+```{r}
+top_100 <- lyrics %>%
+  unnest_tokens(word, Lyrics, token = "words") %>%
+  filter(!word %in% stop_words$word, str_detect(word, "[a-z]"))
+
+top_100
+```
+
+### (To-Do, 10 points) Q2-2 : Sentiment analysis with bing lexicon
+* Goal: mapping each token with a sentimental  score in *bing* lexicon
+
+```{r}
+library('textdata')
+```
+
+* Step 1: using *inner_join** to map each token to lexicom lable
+* Step 2: count on positive and negative words in each song
+* Step 3: create sentiment variable (sentiment score) as positive (i.e, the number of positive word in a song) - negative (i.e., that of negative word in a song) 
+* Step 4: show the result (5 points)
+* Step 5: What song shows the highest positive sentiment score? (5 points)
+
+
+```{r}
+top_100 %>%
+  inner_join(get_sentiments("afinn")) %>%
+  count(Song, value) %>% 
+  spread(value, n, fill = 0)
+```
+
+```{r}
+afinn <- top_100 %>% 
+  inner_join(get_sentiments("afinn")) %>% 
+  count(Song, value) %>% 
+  group_by(index = linenumber %/% 80) %>% 
+  summarise(sentiment = sum(value)) %>% 
+  mutate(method = "AFINN")
+```
+```{r}
+afinn %>%
+  ggplot(aes(index, sentiment, fill = method)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~method, ncol = 1, scales = "free_y")
+```
+ 
+
+```{r}
+top_100 %>%
+  group_by(word) %>%
+  summarise(uses = n()) %>%
+  arrange(desc(uses))
+```
+
+
+# Word cloud
+
+```{r}
+library(wordcloud)
+```
+
+### (To-Do, 10 point) Q5-1 : word cloud
+
+* Goal: showing the word cloud based on word count
+* step 1: removing stop_words
+* step 2; count each word
+* step 3: show *wordcloud* method with the word that appears more than 100 times (ie., max.words=100) (10 points)
+
+```{r}
+top_100_wordcloud <- top_100 %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words=100))
+```
+
+
+### (To-Do, 10 point) Q5-2: word cloud with *bing* lexicon
+
+
+```{r}
+library(reshape2)
+```
+* Step 1: mapping each token in maroon.5 with bing's lexicon sentiment (positive vs negative)
+* Step 2: count each word per each sentiment
+* Step 3: apply acast in reshape method
+* Step 4: comparison.cloud methods to show positive and negative words with different colors (red and blue), (10 points)
+* Hint: What are the biggest red words? Yes, it should be Love and loving!
+
+```{r}
+maroon.5_wordcloud_sentiment <- maroon.5 %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word~sentiment, value.var ="n", fill=0) %>%
+  comparison.cloud(colors = c("red","blue"), max.words = 100)
+```
