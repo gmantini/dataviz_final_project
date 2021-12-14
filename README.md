@@ -20,7 +20,7 @@ Summer months have notably higher numbers of births, likely due to natural seaso
 **Sample data visualization:** 
 
 _[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/echarts.png" width="70%" height="70%">
+<img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/births_heatmap.png">
 
 
 
@@ -36,7 +36,7 @@ Find the code and report in the `project_02/` folder.
 **Sample data visualization:** 
 
 _[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/dataviz_final_project/blob/main/figures/fl_higher_ed.png" width="60%" height="60%">
+<img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/age_vs_prize_year_scatterplot.png">
 
 (you can also place your figures in the `figures/` folder and use the `![](path_to_picture)` option to add the pictures here)
 
