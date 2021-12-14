@@ -19,7 +19,7 @@ Summer months have notably higher numbers of births, likely due to natural seaso
 
 **Sample data visualization:** 
 
-_Average Births per day from 2000 to 2014_
+_Average Births per day from 2000 to 2014_ /n
 <img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/births_heatmap.png">
 
 
@@ -35,7 +35,7 @@ Find the code and report in the `project_02/` folder.
 
 **Sample data visualization:** 
 
-_Age vs Awarded Prize Year across the 6 Nobel Prize Categories_
+_Age vs Awarded Prize Year across the 6 Nobel Prize Categories_ /n
 <img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/age_vs_prize_year_scatterplot.png">
 
 
