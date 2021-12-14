@@ -27,7 +27,11 @@ _[include your favorite visualization from this project here]_
 
 ## Project 02
 
-In this project, I explored ... _[short description of your revised project goes here]_ Find the code and report in the `project_02/` folder.
+Inspired by the R4DS Tidy Tuesday work, I explored the distribution of Nobel Laureate Winners and Publications from the inception of the prize in 1901 through 2016. Conclusions of the analysis were that Nobel Prizes were predominantly won by men in the United States and Europe who are in their late 60s. 
+
+In addition, the work they won an award for on average was published ~25 years prior to receiving their allocade. This winning publication on average occurs 20% of the way in to their career. These trends are most pronounced in the Sciences, while Peace and Literature Prizes have more variation in age and birth country. 
+
+Find the code and report in the `project_02/` folder.
 
 **Sample data visualization:** 
 
