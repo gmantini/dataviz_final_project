@@ -19,7 +19,8 @@ Summer months have notably higher numbers of births, likely due to natural seaso
 
 **Sample data visualization:** 
 
-                       _Average Births per day from 2000 to 2014_
+_Births Heatmap_
+
 <img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/births_heatmap.png">
 
 
