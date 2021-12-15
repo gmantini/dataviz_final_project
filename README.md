@@ -41,9 +41,11 @@ _Age vs Awarded Prize Year across the 6 Nobel Prize Categories_
 <img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/age_vs_prize_year_scatterplot.png">
 
 
+
+
 ## Project 03
 
-In this project, I explored ... _[short description of your revised project goes here]_
+In `project_03/`, I explored methods to visualize text data using the Billboards Top 100 dataset from 2015. I specifically focused on analyzing the top 100 songs through the AFINN lexicon. The AFINN lexicon is a list of words manually rated with an integer between -5 (negative) and +5 (positive) for its sentiment.
 
 **Sample data visualization:** 
 
@@ -51,6 +53,10 @@ _[include your favorite visualization from this project here]_
 <img src="https://github.com/reisanar/figs/raw/master/jackie_jessie_marion.png" width="80%" height="80%">
 
 
+
+
 ### Moving Forward
 
-_add here a short reflection on what you learned and what you plan to continue exploring in terms of data visualization, data storytelling, reproducible research, and/or related topics_
+Through my experience in the Data Visualization and Reproducible Research course, I learned and reinforced a number of important concepts in the field of data analytics and data science. This was the first time I learned how to produce spacial visualizations, and having that demystified will help me a lot moving forward to start to better implement geographic data. Seeing the interactive data stories/articles also gave me some good insight and ideas for more effective and captivating data storytelling. 
+
+Lastly, getting a refresher on version control through github and learning about special YAML attributes for integrating markdown in github from RStudio was a nice touch for better showcasing my work. Overall, I look forward to better integrating these core concepts in to my future work in my Master's Project, as well as in industry or any related side projects I may end up doing.
