@@ -45,12 +45,12 @@ _Age vs Awarded Prize Year across the 6 Nobel Prize Categories_
 
 ## Project 03
 
-In `project_03/`, I explored methods to visualize text data using the Billboards Top 100 dataset from 2015. I specifically focused on analyzing the top 100 songs through the AFINN lexicon. The AFINN lexicon is a list of words manually rated with an integer between -5 (negative) and +5 (positive) for its sentiment.
+In `project_03/`, I explored methods to visualize text data using the Billboards Top 100 dataset from 2015. I specifically focused on analyzing the top 100 songs through the AFINN lexicon, as well as taking a closer look at songs from The Weeknd and creating a word cloud based off his most common words in the four songs he featured in.
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/jackie_jessie_marion.png" width="80%" height="80%">
+_[The Weeknd Bing Word Cloud]_
+<img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/the_weeknd_word_cloud.PNG">
 
 
 
