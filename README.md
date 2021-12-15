@@ -50,6 +50,7 @@ In `project_03/`, I explored methods to visualize text data using the Billboards
 **Sample data visualization:** 
 
 _[The Weeknd Bing Word Cloud]_
+
 <img src="https://github.com/gmantini/dataviz_final_project/blob/main/figures/the_weeknd_word_cloud.PNG">
 
 
